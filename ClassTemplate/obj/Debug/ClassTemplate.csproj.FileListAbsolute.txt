@@ -1,0 +1,11 @@
+F:\project_cw\DownloadPdf\ClassTemplate\bin\Debug\ClassTemplate.dll
+F:\project_cw\DownloadPdf\ClassTemplate\bin\Debug\ClassTemplate.pdb
+F:\project_cw\DownloadPdf\ClassTemplate\obj\Debug\ClassTemplate.dll
+F:\project_cw\DownloadPdf\ClassTemplate\obj\Debug\ClassTemplate.pdb
+F:\project_cw\DownloadPdf\ClassTemplate\obj\Debug\ClassTemplate.csprojResolveAssemblyReference.cache
+F:\project_cw\DownloadPdf\ClassTemplate\bin\Debug\Common.dll
+F:\project_cw\DownloadPdf\ClassTemplate\bin\Debug\itextsharp.dll
+F:\project_cw\DownloadPdf\ClassTemplate\bin\Debug\log4net.dll
+F:\project_cw\DownloadPdf\ClassTemplate\bin\Debug\Common.pdb
+F:\project_cw\DownloadPdf\ClassTemplate\bin\Debug\ImageUtils.dll
+F:\project_cw\DownloadPdf\ClassTemplate\bin\Debug\ImageUtils.pdb
