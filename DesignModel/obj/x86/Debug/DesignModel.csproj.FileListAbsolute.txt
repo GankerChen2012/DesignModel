@@ -1,7 +1,0 @@
-F:\project_cw\DesignModel\DesignModel\bin\Debug\DesignModel.exe
-F:\project_cw\DesignModel\DesignModel\bin\Debug\DesignModel.pdb
-F:\project_cw\DesignModel\DesignModel\obj\x86\Debug\DesignModel.exe
-F:\project_cw\DesignModel\DesignModel\obj\x86\Debug\DesignModel.pdb
-F:\project_cw\DesignModel\DesignModel\obj\x86\Debug\DesignModel.csprojResolveAssemblyReference.cache
-F:\GitCodes\DesignModel\DesignModel\obj\x86\Debug\DesignModel.exe
-F:\GitCodes\DesignModel\DesignModel\obj\x86\Debug\DesignModel.pdb
