@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace DesignModel
 {
@@ -10,7 +7,7 @@ namespace DesignModel
 
     internal class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             #region 创建型模式
 
@@ -55,17 +52,21 @@ namespace DesignModel
 
             #region 行为型模式
 
+            //职责链模式
+            //ChainOfResponsibility chainOfResponsibility=new ChainOfResponsibility();
 
-            
+            //命令模式
+            //CommandPattern commandPattern=new CommandPattern();
+
+            //解释器模式
+            InterpreterPattern InterpreterPattern=new InterpreterPattern();
 
             #endregion
-
 
 
             Console.ReadKey();
         }
     }
-
 
 
 

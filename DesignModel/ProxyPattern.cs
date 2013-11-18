@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace DesignModel
 {
@@ -33,10 +30,8 @@ namespace DesignModel
 
     public class Coder : AbstactCoder
     {
-        
         public override void Write()
         {
-            
             Console.WriteLine("写代码！");
         }
     }

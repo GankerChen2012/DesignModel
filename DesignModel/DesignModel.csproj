@@ -63,11 +63,13 @@
     <Compile Include="BridgePattern.cs" />
     <Compile Include="BuilderPattern.cs" />
     <Compile Include="ChainOfResponsibility.cs" />
+    <Compile Include="CommandPattern.cs" />
     <Compile Include="CompositePattern.cs" />
     <Compile Include="DecoratorPattern.cs" />
     <Compile Include="FacadePattern.cs" />
     <Compile Include="FactoryPattern.cs" />
     <Compile Include="FlyweightPattern.cs" />
+    <Compile Include="InterpreterPattern.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProtypePattern.cs" />
