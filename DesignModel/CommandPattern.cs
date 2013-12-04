@@ -6,6 +6,7 @@ using System.Text;
 namespace DesignModel
 {
     //自我总结：命令模式将动作分离成单独的类
+    //分离之后，命令类的生命周期由请求者来决定
 
 
     //命令模式又称为行动（Action）模式或交易（Transaction）模式。命令模式把一个请求或者操作封装到一个对象中。
@@ -57,6 +58,12 @@ namespace DesignModel
 
             invoker.SetCommand(command);
             invoker.ExecuteCommand();
+
+
+            command = null;
+            invoker.ExecuteCommand();
+
+            //把command赋值为空，但请求者实体里面的command没变，所以还是会执行
         }
     }
 
@@ -92,14 +99,14 @@ namespace DesignModel
 
     internal class Invoker
     {
-        private Command command;
+        private Command _command;
         public void SetCommand(Command command)
         {
-            this.command = command;
+            _command = command;
         }
         public void ExecuteCommand()
         {
-            command.Execute();
+            _command.Execute();
         }
     }
 

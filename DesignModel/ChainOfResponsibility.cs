@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace DesignModel
 {
@@ -16,22 +17,22 @@ namespace DesignModel
     {
         public ChainOfResponsibility()
         {
-            Handler h1=new ConcreateHandler1();
-            Handler h2 = new ConcreateHandler2();
-            Handler h3 = new ConcreateHandler3();
-            Handler h4 = new ConcreateHandler4();
-            h1.SetSuccessor(h2);
-            h2.SetSuccessor(h3);
-            h3.SetSuccessor(h4);
-            int[] requests = {2, 4, 12, 34, 23, 54};
+            //Handler h1=new ConcreateHandler1();
+            //Handler h2 = new ConcreateHandler2();
+            //Handler h3 = new ConcreateHandler3();
+            //Handler h4 = new ConcreateHandler4();
+            //h1.SetSuccessor(h2);
+            //h2.SetSuccessor(h3);
+            //h3.SetSuccessor(h4);
+            //int[] requests = {2, 4, 12, 34, 23, 54};
 
-            foreach (var request in requests)
-            {
-                h1.HandRequest(request);
-            }
+            //foreach (var request in requests)
+            //{
+            //    h1.HandRequest(request);
+            //}
 
             //四则运算 职责链
-            //ChainOfResponsibilityTest chainOfResponsibilityTest = new ChainOfResponsibilityTest();
+            ChainOfResponsibilityTest chainOfResponsibilityTest = new ChainOfResponsibilityTest();
         }
 
     }
@@ -110,10 +111,12 @@ namespace DesignModel
             com2.Next = com3;
             com3.Next = com4;
 
-            const string s = "2+3*4-5/7";
+            const string s = "2+3*4-7/7+5*6";
             char[] chs = s.ToCharArray();
-            double sum = 0;
-            var sign = "";
+
+            var listNum=new List<double>();
+            var listSign=new List<string>();
+
             for (var i = 0; i < chs.Length; i++)
             {
                 var ch = chs[i].ToString();
@@ -121,15 +124,53 @@ namespace DesignModel
                 var bo = double.TryParse(ch, out num);
 
                 if (bo)
-                {
-                    sum = i == 0 ? num : com1.Action(sign, sum, num);
-                }
+                    listNum.Add(num);
                 else
+                    listSign.Add(ch);
+            }
+
+            var sum = Calculate(listNum, listSign, com1);
+            Console.WriteLine(sum);
+        }
+
+        //只进行2级运算
+        public double Calculate(List<double> listNum, List<string> listSign, Operation com)
+        {
+            for (var i = 0; i < listSign.Count;i++ )
+            {
+                var sign = listSign[i];
+                var num1 = listNum[i];
+                var num2 = listNum[i + 1];
+                if (sign == "*" || sign == "/")
                 {
-                    sign = ch;
+                    var num = com.Action(sign, num1, num2);
+                    listNum.RemoveAt(i);
+                    listNum.RemoveAt(i);
+                    listNum.Insert(i, num);
+                    listSign.RemoveAt(i);
+                    Console.WriteLine("{0}{1}{2}={3}", num1, sign, num2, num);
                 }
             }
-            Console.WriteLine(sum);
+
+            return  AddCut(listNum, listSign, com);
+        }
+
+        //只进行1级运算
+        public double AddCut(List<double> listNum, List<string> listSign, Operation com)
+        {
+            double sum = 0;
+            for (var i = 0; i < listSign.Count; i++)
+            {
+                if (i == 0)
+                {
+                    sum = listNum[0];
+                }
+                var sign = listSign[i];
+                var num2 = listNum[i + 1];
+                var num = com.Action(sign, sum, num2);
+                sum = num;
+            }
+            return sum;
         }
 
     }
@@ -194,6 +235,11 @@ namespace DesignModel
         }
     }
   
+
+
+
+
+
     #endregion
 
 

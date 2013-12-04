@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace DesignModel
 {
@@ -18,14 +19,26 @@ namespace DesignModel
     //总结
     //组合模式解耦了客户程序与复杂元素内部结构，从而使客户程序可以向处理简单元素一样来处理复杂元素。
 
-    class CompositePattern
+
+    internal class CompositePattern
     {
         public CompositePattern()
         {
-            var g=new Picture("test");
+            //CompositePattern1 one = new CompositePattern1();
+
+            CompositePattern2 two = new CompositePattern2();
+        }
+
+    }
+
+    internal class CompositePattern1
+    {
+        public CompositePattern1()
+        {
+            var g = new Picture("test");
             g.Draw();
 
-            Graphics gl=new Line("lineTest");
+            Graphics gl = new Line("lineTest");
             gl.Draw();
             Graphics gr = new Round("RountTest");
             gr.Draw();
@@ -39,21 +52,19 @@ namespace DesignModel
             g.Remove(gl);
             g.Draw();
 
-            
         }
-
     }
-
     internal abstract class Graphics
     {
         public string Name;
+
         protected Graphics(string name)
         {
             Name = name;
         }
+
         public abstract void Draw();
     }
-
     internal class Line : Graphics
     {
         public Line(string name)
@@ -66,25 +77,26 @@ namespace DesignModel
             Console.WriteLine("Draw:Line-" + Name);
         }
     }
-
-    class Round : Graphics
+    internal class Round : Graphics
     {
         public Round(string name)
             : base(name)
         {
         }
+
         public override void Draw()
         {
             Console.WriteLine("Draw:Round-" + Name);
         }
     }
-
-    class Picture:Graphics
+    internal class Picture : Graphics
     {
         protected ArrayList PicList = new ArrayList();
+
         public Picture(string name) : base(name)
         {
         }
+
         public override void Draw()
         {
             Console.WriteLine("Draw:Picture-" + Name);
@@ -93,14 +105,95 @@ namespace DesignModel
                 list.Draw();
             }
         }
+
         public void Add(Graphics g)
         {
             PicList.Add(g);
         }
+
         public void Remove(Graphics g)
         {
             PicList.Remove(g);
         }
     }
+
+
+    class CompositePattern2
+    {
+        public CompositePattern2()
+        {
+            Component root =new Composite("Root");
+            root.Add(new Leaf("left A"));
+            root.Add(new Leaf("left B"));
+
+            Component a=new Composite("Composise A");
+            a.Add(new Leaf("Composiseleft A"));
+            a.Add(new Leaf("Composiseleft B"));
+
+            root.Add(a);
+
+            root.Display(1);
+        }
+    }
+    abstract class Component
+    {
+        public string Name { get; set; }
+        protected Component(string name)
+        {
+            Name = name;
+        }
+
+        public abstract void Add(Component c);
+        public abstract void Remove(Component c);
+        public abstract void Display(int depth);
+    }
+    class Leaf:Component
+    {
+        public Leaf(string name) : base(name)
+        {
+        }
+        public override void Add(Component c)
+        {
+            throw new NotImplementedException();
+        }
+        public override void Remove(Component c)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Display(int depth)
+        {
+            Console.WriteLine(new string('-', depth) + Name);
+        }
+    }
+    class Composite:Component
+    {
+        readonly List<Component> list=new List<Component>();
+        public Composite(string name) : base(name)
+        {
+        }
+
+        public override void Add(Component c)
+        {
+            list.Add(c);
+        }
+
+        public override void Remove(Component c)
+        {
+            list.Remove(c);
+        }
+
+        public override void Display(int depth)
+        {
+            Console.WriteLine(new string('~', depth) + Name);
+            foreach (var c in list)
+            {
+                c.Display(depth+2);
+            }
+        }
+    }
+
+
+
 
 }

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
+using System.Text;
 
 namespace DesignModel
 {
@@ -21,7 +24,6 @@ namespace DesignModel
             productA.Work();
             Car carA = factory.NewCar();
             carA.Bulid();
-
 
             Car carB = new CarB();
             carB.Bulid();
@@ -76,5 +78,40 @@ namespace DesignModel
             return new CarA();//实现具体的实例化
         }
     }
+
+
+    //反射
+    public class Reflect
+    {
+        public void ProductReflect(string name)
+        {
+            Assembly assembly = Assembly.LoadFrom("DesignModel.exe");
+
+            //第一种
+            var tp = (Car)assembly.CreateInstance("DesignModel." + name);
+            if (tp != null) 
+                tp.Bulid();
+
+            //第二种
+            Type T = assembly.GetType("DesignModel." + name);
+            MethodInfo mi = T.GetMethod("Bulid");
+            object o = Activator.CreateInstance(T);
+            object[] par = new object[] {  };
+            mi.Invoke(o, par);
+        }
+
+        //读取内嵌到程序里面的txt的值
+        public void Test()
+        {
+            Assembly aObj = Assembly.GetExecutingAssembly();
+            Stream sStream = aObj.GetManifestResourceStream("DesignModel.1.txt");
+
+            byte[] bs = new byte[sStream.Length];
+            sStream.Read(bs, 0, bs.Length);
+            string txt = Encoding.Default.GetString(bs); //将byte数组转换为string. 
+        }
+    }
+
+
 
 }

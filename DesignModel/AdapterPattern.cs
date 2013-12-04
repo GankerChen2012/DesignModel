@@ -25,107 +25,91 @@ namespace DesignModel
     //3．（对对象适配器而言）在设计里，需要改变多个已有子类的接口，如果使用类的适配器模式，就要针对每一个子类做一个适配器，而这不太实际。
 
 
-    class AdapterPattern
+    public class AdapterPattern
     {
         public AdapterPattern()
         {
-            //类适配器
-            FileClassLog fileLog = new FileClassLog();
-            fileLog.Write();
+            
+            Player p=new Forwards("巴蒂尔");
+            p.Attack();
+            p.Defense();
 
-            //类适配器
-            FileLogTest fileLogTest = new FileLogTest();
-            fileLogTest.Write();
-            fileLogTest.WriteLog();
-
-            //没有适配器
-            FileLog dataBaseLog = new FileLog();
-            dataBaseLog.Write();
-
-            FileLogAdapter fileLogAdapter = new FileLogAdapter();
-            fileLogAdapter.WriteLog();
-
-            //对象适配器
-            LogAdapter fileObject = new LogAdapter(new FileObjectLogAdapter());
-            fileObject.Write();
-
+            Player pl=new Translator("姚明");
+            pl.Attack();
+            pl.Defense();
         }
+
     }
 
-    public interface ILog
+    public abstract class Player
     {
-        void Write();
-    }
-
-    public class FileClassLog : FileClassLogAdapter, ILog
-    {
-        public void Write()
+        protected string Name;
+        protected Player(string name)
         {
-            WriteLog();
+            Name = name;
+        }
+
+        public abstract void Attack();
+        public abstract void Defense();
+
+    }
+
+    //前锋
+    public class Forwards : Player
+    {
+        public Forwards(string name) : base(name)
+        {
+        }
+
+        public override void Attack()
+        {
+            Console.WriteLine("{0}-Attack", Name);
+        }
+
+        public override void Defense()
+        {
+            Console.WriteLine("{0}-Defense",Name);
         }
     }
-    public class FileLog : ILog
+    
+    //外籍中锋
+    public class ForeignCenter
     {
-        public void Write()
+        public string Name { get; set; }
+
+        public void 进攻()
         {
-            Console.WriteLine("FileLog");
+            Console.WriteLine("外籍中锋 {0}-进攻",Name);
         }
-    }
-    public class FileObjectLog : ILog
-    {
-        public void Write()
+
+        public void 防守()
         {
-            Console.WriteLine("FileObjectLog");
+            Console.WriteLine("外籍中锋 {0}-防守", Name);
+        }
+
+    }
+
+    //翻译者(适配器)
+    public class Translator:Player
+    {
+        private ForeignCenter foreignCenter=new ForeignCenter();
+
+        public Translator(string name) : base(name)
+        {
+            foreignCenter.Name = name;
+        }
+
+        public override void Attack()
+        {
+            foreignCenter.进攻();
+        }
+
+        public override void Defense()
+        {
+            foreignCenter.防守();
         }
     }
 
-
-    public abstract class AbLogAdapter
-    {
-        public abstract void WriteLog();
-    }
-    public class FileClassLogAdapter : AbLogAdapter
-    {
-        public override void WriteLog()
-        {
-            Console.WriteLine("d");
-        }
-    }
-    public class FileLogAdapter : AbLogAdapter
-    {
-        public override void WriteLog()
-        {
-            Console.WriteLine("FileLogAdapter");
-        }
-    }
-    public class FileObjectLogAdapter : AbLogAdapter
-    {
-        public override void WriteLog()
-        {
-            Console.WriteLine("FileObjectLog");
-        }
-    }
-
-    public class FileLogTest : FileLogAdapter, ILog
-    {
-        public void Write()
-        {
-            WriteLog();
-        }
-    }
-
-    public class LogAdapter : ILog
-    {
-        private readonly AbLogAdapter adaptee;
-        public LogAdapter(AbLogAdapter adaptee)
-        {
-            this.adaptee = adaptee;
-        }
-        public void Write()
-        {
-            adaptee.WriteLog();
-        }
-    }
 }
 
 
